@@ -1,3 +1,16 @@
+<?php
+
+/**
+ *  Author:         Zane Stearman
+ *  Date:           04/08/2019
+ *  File:           order-confirm.php
+ *  URL:            http://zts.greenriverdev.com/328/cupcakes/order-confirm.php
+ *  Description:    Confirmation page for Cupcake order, via cupcakes/index.php
+ */
+
+require ('functions.php');
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,18 +24,30 @@
 
 <h2>Thank you, <?php echo $_POST['name']; ?>
     , for your order!
-<?php
+</h2>
+<p>Order Summary: </p>
+<ul>
+    <?php
+        if(isset($_POST['flavor']))
+            {
+                foreach ($_POST['flavor'] as $item)
+                {
+                    foreach ($flavors as $key => $value)
+                    {
+                        if ($item == $key)
+                        {
+                            echo '<li>' . $value . '</li>';
+                            $cost += 3.50;
+                        }
 
-echo '<br>';
-echo $_POST['name'];
-echo $_POST['flavors[]'];
-//echo '<br>';
-//var_dump($_POST['pizzas']);
-//$num_pizzas = (int)$_POST['pizzas'];
-//echo '<br>';
-//var_dump($num_pizzas);
+                    }
+                }
+            }
 
-?>
+        ?>
+</ul>
+<p>Order Total: $ <?php echo number_format($cost, 2); ?></p>
+
 </body>
 
 
